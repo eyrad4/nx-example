@@ -1,6 +1,294 @@
 {
   "version": 1,
   "projects": {
+    "affiliate": {
+      "projectType": "application",
+      "root": "apps/affiliate",
+      "sourceRoot": "apps/affiliate/src",
+      "prefix": "scaleo-nx2",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:webpack-browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/affiliate",
+            "index": "apps/affiliate/src/index.html",
+            "main": "apps/affiliate/src/main.ts",
+            "polyfills": "apps/affiliate/src/polyfills.ts",
+            "tsConfig": "apps/affiliate/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/affiliate/src/favicon.ico",
+              "apps/affiliate/src/assets"
+            ],
+            "styles": ["apps/affiliate/src/styles.scss"],
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "apps/affiliate/webpack.config.js"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/affiliate/src/environments/environment.ts",
+                  "with": "apps/affiliate/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "customWebpackConfig": {
+                "path": "apps/affiliate/webpack.prod.config.js"
+              }
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@nrwl/angular:webpack-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "affiliate:build:production"
+            },
+            "development": {
+              "browserTarget": "affiliate:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4202
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "affiliate:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/affiliate/src/**/*.ts",
+              "apps/affiliate/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/affiliate"],
+          "options": {
+            "jestConfig": "apps/affiliate/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "affiliate-e2e": {
+      "root": "apps/affiliate-e2e",
+      "sourceRoot": "apps/affiliate-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/affiliate-e2e/cypress.json",
+            "devServerTarget": "affiliate:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "affiliate:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/affiliate-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["affiliate"]
+    },
+    "manager": {
+      "projectType": "application",
+      "root": "apps/manager",
+      "sourceRoot": "apps/manager/src",
+      "prefix": "scaleo-nx2",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:webpack-browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/manager",
+            "index": "apps/manager/src/index.html",
+            "main": "apps/manager/src/main.ts",
+            "polyfills": "apps/manager/src/polyfills.ts",
+            "tsConfig": "apps/manager/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/manager/src/favicon.ico",
+              "apps/manager/src/assets"
+            ],
+            "styles": ["apps/manager/src/styles.scss"],
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "apps/manager/webpack.config.js"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/manager/src/environments/environment.ts",
+                  "with": "apps/manager/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "customWebpackConfig": {
+                "path": "apps/manager/webpack.prod.config.js"
+              }
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@nrwl/angular:webpack-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "manager:build:production"
+            },
+            "development": {
+              "browserTarget": "manager:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4201
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "manager:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/manager/src/**/*.ts",
+              "apps/manager/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/manager"],
+          "options": {
+            "jestConfig": "apps/manager/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "manager-e2e": {
+      "root": "apps/manager-e2e",
+      "sourceRoot": "apps/manager-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/manager-e2e/cypress.json",
+            "devServerTarget": "manager:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "manager:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/manager-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["manager"]
+    },
+    "shared-counter": {
+      "projectType": "library",
+      "root": "libs/shared/counter",
+      "sourceRoot": "libs/shared/counter/src",
+      "prefix": "scaleo-nx2",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/counter"],
+          "options": {
+            "jestConfig": "libs/shared/counter/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/counter/src/**/*.ts",
+              "libs/shared/counter/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "shell": {
       "projectType": "application",
       "root": "apps/shell",
@@ -8,7 +296,7 @@
       "prefix": "scaleo-nx2",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@nrwl/angular:webpack-browser",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/shell",
@@ -19,7 +307,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
             "styles": ["apps/shell/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "apps/shell/webpack.config.js"
+            }
           },
           "configurations": {
             "production": {
@@ -41,7 +332,10 @@
                   "with": "apps/shell/src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "customWebpackConfig": {
+                "path": "apps/shell/webpack.prod.config.js"
+              }
             },
             "development": {
               "buildOptimizer": false,
@@ -55,7 +349,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@nrwl/angular:webpack-server",
           "configurations": {
             "production": {
               "browserTarget": "shell:build:production"
@@ -64,7 +358,10 @@
               "browserTarget": "shell:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4200
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -87,6 +384,16 @@
           "options": {
             "jestConfig": "apps/shell/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "serve-mfe": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx serve affiliate",
+              "nx serve manager",
+              "nx serve shell"
+            ]
           }
         }
       },
